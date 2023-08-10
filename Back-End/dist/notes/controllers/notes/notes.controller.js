@@ -20,43 +20,46 @@ let NotesController = exports.NotesController = class NotesController {
     constructor(noteService) {
         this.noteService = noteService;
     }
-    getUsers() {
-        return this.noteService.findAllNotes();
+    getNotes(page, limit, archived) {
+        return this.noteService.findAllNotes(page, limit, archived);
     }
-    findUsersById(id) {
+    findNotesById(id) {
         return this.noteService.findNote(id);
     }
-    createUsers(createNoteDto) {
+    createNotes(createNoteDto) {
         return this.noteService.createNote(createNoteDto);
     }
-    updateUsers(id, updateNoteDto) {
+    updateNotes(id, updateNoteDto) {
         return this.noteService.updateNote(id, updateNoteDto);
     }
-    deleteUsers(id) {
+    deleteNotes(id) {
         return this.noteService.deleteNote(id);
     }
 };
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)('page', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Query)('limit', common_1.ParseIntPipe)),
+    __param(2, (0, common_1.Query)('archived')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
-], NotesController.prototype, "getUsers", null);
+    __metadata("design:paramtypes", [Number, Number, Boolean]),
+    __metadata("design:returntype", void 0)
+], NotesController.prototype, "getNotes", null);
 __decorate([
     (0, common_1.Get)('/:id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], NotesController.prototype, "findUsersById", null);
+    __metadata("design:returntype", Promise)
+], NotesController.prototype, "findNotesById", null);
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UsePipes)(common_1.ValidationPipe),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [note_dto_1.CreateNoteDto]),
-    __metadata("design:returntype", void 0)
-], NotesController.prototype, "createUsers", null);
+    __metadata("design:returntype", Promise)
+], NotesController.prototype, "createNotes", null);
 __decorate([
     (0, common_1.Put)('/:id'),
     (0, common_1.UsePipes)(common_1.ValidationPipe),
@@ -65,14 +68,14 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, note_dto_1.UpdateNoteDto]),
     __metadata("design:returntype", void 0)
-], NotesController.prototype, "updateUsers", null);
+], NotesController.prototype, "updateNotes", null);
 __decorate([
     (0, common_1.Delete)('/:id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
-], NotesController.prototype, "deleteUsers", null);
+], NotesController.prototype, "deleteNotes", null);
 exports.NotesController = NotesController = __decorate([
     (0, common_1.Controller)('notes'),
     __metadata("design:paramtypes", [notes_service_1.NotesService])

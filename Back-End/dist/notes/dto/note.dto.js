@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateNoteDto = exports.CreateNoteDto = void 0;
+exports.GetNoteDto = exports.UpdateNoteDto = exports.CreateNoteDto = void 0;
 const class_validator_1 = require("class-validator");
 class CreateNoteDto {
 }
@@ -41,4 +41,39 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Boolean)
 ], UpdateNoteDto.prototype, "isArchived", void 0);
+class GetNoteDto {
+}
+exports.GetNoteDto = GetNoteDto;
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Number)
+], GetNoteDto.prototype, "id", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], GetNoteDto.prototype, "title", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], GetNoteDto.prototype, "description", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Boolean)
+], GetNoteDto.prototype, "isArchived", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Boolean)
+], GetNoteDto.prototype, "isDeleted", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Date)
+], GetNoteDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Date)
+], GetNoteDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Date)
+], GetNoteDto.prototype, "deletedAt", void 0);
 //# sourceMappingURL=note.dto.js.map

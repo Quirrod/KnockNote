@@ -32,8 +32,15 @@ let NotesService = exports.NotesService = class NotesService {
             }
         });
     }
-    findAllNotes() {
-        return this.userRepository.find();
+    findAllNotes(page = 1, limit = 6, archived = false) {
+        return this.userRepository.findAndCount({
+            where: {
+                isArchived: archived,
+                isDeleted: false
+            },
+            take: limit,
+            skip: (page - 1) * limit,
+        });
     }
     updateNote(id, updateNoteDto) {
         return this.userRepository.update(id, updateNoteDto);

@@ -7,3 +7,13 @@ export declare class UpdateNoteDto {
     decription: string;
     isArchived: boolean;
 }
+export declare class GetNoteDto {
+    id: number;
+    title: string;
+    description: string;
+    isArchived: boolean;
+    isDeleted: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date;
+}

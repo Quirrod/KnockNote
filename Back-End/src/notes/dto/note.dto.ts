@@ -22,3 +22,29 @@ export class UpdateNoteDto {
     @IsNotEmpty()
     isArchived: boolean;
 }
+
+export class GetNoteDto {
+    @IsNotEmpty()
+    id: number;
+
+    @IsNotEmpty()
+    title: string;
+
+    @IsNotEmpty()
+    description: string;
+
+    @IsNotEmpty()
+    isArchived: boolean;
+
+    @IsNotEmpty()
+    isDeleted: boolean;
+
+    @IsNotEmpty()
+    createdAt: Date;
+
+    @IsNotEmpty()
+    updatedAt: Date;
+
+    @IsNotEmpty()
+    deletedAt: Date;
+}
