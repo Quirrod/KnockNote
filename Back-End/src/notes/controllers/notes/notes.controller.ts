@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateNoteDto, GetNoteDto, UpdateNoteDto } from 'src/notes/dto/note.dto';
 import { NotesService } from 'src/notes/services/notes/notes.service';
 import { Note } from 'src/typeorm';
@@ -11,11 +11,10 @@ export class NotesController {
     getNotes(
         @Query('page', ParseIntPipe) page: number,
         @Query('limit', ParseIntPipe) limit: number,
-        @Query('archived') archived: boolean,
-    ) {
-        // send in meta the number if pagination
+        @Query('archived', ParseBoolPipe) archived: boolean,
+    ): Promise<[Note[], number]> {
         return this.noteService.findAllNotes(page, limit, archived);
-        
+
     }
 
     @Get('/:id')

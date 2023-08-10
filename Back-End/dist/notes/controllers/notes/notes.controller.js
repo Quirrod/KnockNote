@@ -40,10 +40,10 @@ __decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)('page', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Query)('limit', common_1.ParseIntPipe)),
-    __param(2, (0, common_1.Query)('archived')),
+    __param(2, (0, common_1.Query)('archived', common_1.ParseBoolPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number, Boolean]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], NotesController.prototype, "getNotes", null);
 __decorate([
     (0, common_1.Get)('/:id'),
