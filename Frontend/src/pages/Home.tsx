@@ -12,10 +12,6 @@ export const Home = () => {
     keepPreviousData: true,
   });
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <>
       <h1 className="text-4xl font-bold text-text">Welcome to KnockNote</h1>
@@ -23,7 +19,7 @@ export const Home = () => {
         KnockNote is a simple note taking app
       </h2>
       <div className="grid auto-rows-auto grid-cols-auto-fill-25 sm:gap-1">
-        {isSuccess && data.data.map((note) => <Note key={note.id} />)}
+        {isSuccess && data.data[0].map((note) => <Note key={note.id} />)}
       </div>
       <div className="flex justify-center w-full py-6">
         <Pagination

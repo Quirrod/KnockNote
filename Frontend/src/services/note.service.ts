@@ -3,8 +3,13 @@ import { INote } from "../models/note.model";
 import { serviceInstance } from "./instance";
 
 export const noteService = {
-    async getNotes(): Promise<AxiosResponse<INote[]>> {
-        const response = await serviceInstance.get('/notes');
+    async getNotes(): Promise<AxiosResponse<[INote[], number]>> {
+        const query = {
+            limit: 6,
+            page: 1,
+            archived: false
+        }
+        const response = await serviceInstance.get('/notes', { params: query });
         return response;
     },
 
