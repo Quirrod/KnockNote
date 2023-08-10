@@ -21,6 +21,15 @@ const buttonConfig = {
     border: "border-2 border-secondary",
     width: "w-full",
   },
+  circle: {
+    bgColor: "bg-primary",
+    textColor: "text-white",
+    bgColorHover: "hover:opacity-70",
+    textColorHover: "hover:text-white",
+    borderHover: "hover:border-2 hover:border-secondary",
+    border: "border-2 border-secondary",
+    width: "w-15 h-15",
+  },
 };
 
 type ButtonProps = {
@@ -52,7 +61,9 @@ function Button({
       ${!disable && buttonConfig[theme]?.textColorHover} ${
         buttonConfig[theme]?.borderHover
       } 
-      ${buttonConfig[theme]?.border} py-2 px-3 rounded-md flex  justify-between ${
+      ${
+        buttonConfig[theme]?.border
+      } py-2 px-3 rounded-md flex  justify-between ${
         buttonConfig[theme]?.width
       }`}
     >

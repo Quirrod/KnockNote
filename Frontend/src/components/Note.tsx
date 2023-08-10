@@ -8,9 +8,10 @@ import { INote } from "../models/note.model";
 
 interface NoteProps {
   note: INote;
+  refetch: () => void;
 }
 
-export const Note: React.FC<NoteProps> = ({ note }) => {
+export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
   const [isOpenDelete, setIsOpenDelete] = React.useState(false);
   const [isOpenArchive, setIsOpenArchive] = React.useState(false);
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
@@ -56,7 +57,7 @@ export const Note: React.FC<NoteProps> = ({ note }) => {
         setOpen={setIsOpenEdit}
         onClose={() => setIsOpenEdit(false)}
       >
-        <NoteForm note={note} setModalOpen={setIsOpenEdit} />
+        <NoteForm refetch={refetch} note={note} setModalOpen={setIsOpenEdit} />
       </Modal>
     </article>
   );

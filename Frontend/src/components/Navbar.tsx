@@ -1,12 +1,7 @@
-import { Notes, Menu, Plus } from "iconoir-react";
-import Button from "./Button";
-import Modal from "./Modal";
-import NoteForm from "./NoteForm";
-import { useState } from "react";
+import { Notes, Menu } from "iconoir-react";
 import { NavLink } from "react-router-dom";
 
 export const Navbar = () => {
-  const [modalOpen, setModalOpen] = useState(false);
   const linkActiveClass =
     "px-3 py-2 rounded-md text-sm font-medium text-white bg-primary focus:outline-none focus:text-white focus:bg-secondary";
   const linkInactiveClass =
@@ -27,11 +22,7 @@ export const Navbar = () => {
           </button>
         </div>
       </div>
-      <div className="fixed right-1/2">
-        <Button onClick={() => setModalOpen(true)} theme="secondary">
-          New Note <Plus />
-        </Button>
-      </div>
+
       <div className="hidden sm:block sm:ml-6">
         <div className="flex space-x-4">
           <NavLink
@@ -52,9 +43,6 @@ export const Navbar = () => {
           </NavLink>
         </div>
       </div>
-      <Modal isOpen={modalOpen} setOpen={setModalOpen} onClose={() => {}}>
-        <NoteForm setModalOpen={setModalOpen} />
-      </Modal>
     </header>
   );
 };

@@ -14,13 +14,13 @@ interface NoteFormInputs {
 }
 
 interface NoteFormProps {
+  refetch: () => void;
   setModalOpen: Dispatch<React.SetStateAction<boolean>>;
   note?: INote;
 }
 
-function NoteForm({ setModalOpen, note }: NoteFormProps) {
+function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
   const methods = useForm<NoteFormInputs>();
-
   useEffect(() => {
     if (!note) return;
     methods.reset({
@@ -31,8 +31,6 @@ function NoteForm({ setModalOpen, note }: NoteFormProps) {
 
   const NoteMutation = useMutation({
     mutationFn: (data: NoteFormInputs) => {
-      // if isCreate is true, create a new note
-      // else update the note
       if (note) {
         const postNote = noteService.updateNote(note?.id!, data);
         return postNote;
@@ -47,6 +45,7 @@ function NoteForm({ setModalOpen, note }: NoteFormProps) {
       // });
     },
     onSuccess: (response: AxiosResponse) => {
+      refetch();
       setModalOpen(false);
     },
   });
