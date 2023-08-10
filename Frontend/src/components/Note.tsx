@@ -11,7 +11,7 @@ export const Note = () => {
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
 
   return (
-    <div className="flex w-full rounded overflow-hidden shadow-2xl">
+    <article className="flex w-full rounded overflow-hidden shadow-2xl">
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">Note 1</div>
         <p className="text-base line-clamp-3">
@@ -57,6 +57,6 @@ export const Note = () => {
       >
         <NoteForm setModalOpen={setIsOpenEdit} />
       </Modal>
-    </div>
+    </article>
   );
 };
