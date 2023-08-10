@@ -1,8 +1,15 @@
 import { LeftRoundArrow, RightRoundArrow } from "iconoir-react";
 import Pagination from "rc-pagination";
 import { Note } from "../components/Note";
+import { useQuery } from "@tanstack/react-query";
+import { noteService } from "../services/note.service";
 
 export const Archived = () => {
+  const { data, isSuccess } = useQuery({
+    queryKey: ["notes"],
+    queryFn: () => noteService.getNotes(6, 1, true),
+    keepPreviousData: true,
+  });
   return (
     <>
       <h1 className="text-4xl font-bold text-text">KnockNote Archived Notes</h1>
@@ -10,12 +17,7 @@ export const Archived = () => {
         KnockNote is a simple note taking app
       </h2>
       <div className="grid auto-rows-auto grid-cols-auto-fill-25 sm:gap-1">
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
+        {isSuccess && data.data[0].map((note) => <Note key={note.id} />)}
       </div>
       <div className="flex justify-center w-full py-6">
         <Pagination
