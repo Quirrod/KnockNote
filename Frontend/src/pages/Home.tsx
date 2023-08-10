@@ -1,4 +1,3 @@
-import { Archive, DeleteCircle, Edit } from "iconoir-react";
 import React from "react";
 import { Note } from "../components/Note";
 
@@ -16,7 +15,6 @@ export const Home = () => {
         <Note />
         <Note />
         <Note />
-
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 import { Archive, DeleteCircle, Edit } from "iconoir-react";
 import React from "react";
+import Button from "./Button";
 
 export const Note = () => {
   return (
@@ -12,25 +13,19 @@ export const Note = () => {
           nihil.
         </p>
       </div>
-      <div className="px-6 pt-4 pb-2 self-center">
-        <button className="w-full flex bg-primary hover:opacity-70 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+      <div className="px-2 pt-4 pb-2 self-center">
+        <Button theme="primary">
           <Edit />
           Edit
-        </button>
-        <button
-          type="button"
-          className="w-full flex bg-primary hover:opacity-70 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"
-        >
+        </Button>
+        <Button theme="primary">
           <DeleteCircle />
           Delete
-        </button>
-        <button
-          type="button"
-          className="w-full flex bg-yellow-400 hover:bg-yellow-500 rounded-full px-3 py-1 text-sm font-semibold text-black mr-2 mb-2"
-        >
+        </Button>
+        <Button theme="secondary">
           <Archive />
           Archive
-        </button>
+        </Button>
       </div>
     </div>
   );
