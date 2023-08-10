@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, MinLength } from "class-validator";
 
 export class CreateNoteDto {
     @IsNotEmpty()
@@ -17,9 +17,10 @@ export class UpdateNoteDto {
 
     @IsNotEmpty()
     @MinLength(8)
-    decription: string;
+    description: string;
 
     @IsNotEmpty()
+    @IsOptional()
     isArchived: boolean;
 }
 

@@ -36,9 +36,10 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(8),
     __metadata("design:type", String)
-], UpdateNoteDto.prototype, "decription", void 0);
+], UpdateNoteDto.prototype, "description", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], UpdateNoteDto.prototype, "isArchived", void 0);
 class GetNoteDto {

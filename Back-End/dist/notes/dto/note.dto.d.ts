@@ -4,7 +4,7 @@ export declare class CreateNoteDto {
 }
 export declare class UpdateNoteDto {
     title: string;
-    decription: string;
+    description: string;
     isArchived: boolean;
 }
 export declare class GetNoteDto {
