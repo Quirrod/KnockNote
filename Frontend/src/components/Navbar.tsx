@@ -3,7 +3,6 @@ import { Notes, Menu } from "iconoir-react";
 export const Navbar = () => {
   return (
     <header className="sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3 w-full">
-      {/* header with 3 components in left the logo in middle a button to add new notes an in rigth a burguer nav */}
       <div className="flex items-center justify-between px-4 py-3 sm:p-0">
         <div>
           <Notes />
