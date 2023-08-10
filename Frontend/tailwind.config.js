@@ -11,7 +11,10 @@ export default {
         primary: "#94ADCF",
         secondary: "#38404B",
         text: "#94ADCF",
-      }
+      },
+      gridTemplateColumns: {
+        'auto-fill-25': 'repeat(auto-fill, minmax(25em, 1fr))',
+      },
     },
   },
   plugins: [],

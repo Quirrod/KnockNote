@@ -11,7 +11,7 @@ export const Note = () => {
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
 
   return (
-    <div className="flex max-w-sm rounded overflow-hidden shadow-lg">
+    <div className="flex w-full rounded overflow-hidden shadow-2xl">
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">Note 1</div>
         <p className="text-base line-clamp-3">
