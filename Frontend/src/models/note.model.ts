@@ -2,9 +2,9 @@ export interface INote {
     id?: number;
     title: string;
     description: string;
-    isArchived: boolean;
-    isDeleted: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-    deletedAt: Date;
+    isArchived?: boolean;
+    isDeleted?: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
+    deletedAt?: Date;
 }

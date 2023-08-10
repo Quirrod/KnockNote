@@ -3,19 +3,42 @@ import { Dispatch } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import CustomInput from "./formComponents/CustomInput";
 import Button from "./Button";
+import { useMutation } from "@tanstack/react-query";
+import { noteService } from "../services/note.service";
+import { AxiosResponse } from "axios";
 
-type NoteFormInputs = {
-  message: string;
-};
+interface NoteFormInputs {
+  title: string;
+  description: string;
+}
 
-type NoteFormProps = {
+interface NoteFormProps {
   setModalOpen: Dispatch<React.SetStateAction<boolean>>;
-};
+}
 
 function NoteForm({ setModalOpen }: NoteFormProps) {
   const methods = useForm<NoteFormInputs>();
 
-  function onSubmit(data: NoteFormInputs) {}
+  const createNoteMutation = useMutation({
+    mutationFn: (data: NoteFormInputs) => {
+      const postNote = noteService.createNote(data);
+      // toast.promise(postCode, {
+      //   loading: "Sharing Code...",
+      //   success: "Code Shared successfully",
+      //   error: "Error sharing code",
+      // });
+
+      return postNote;
+    },
+    onSuccess: (response: AxiosResponse) => {
+      // router.push(`/code/${response.data.id}`);
+      setModalOpen(false);
+    },
+  });
+
+  function onSubmit(data: NoteFormInputs) {
+    createNoteMutation.mutate(data);
+  }
 
   return (
     <>
@@ -36,7 +59,7 @@ function NoteForm({ setModalOpen }: NoteFormProps) {
                 }}
               />
               <CustomInput
-                id="note"
+                id="description"
                 rows={4}
                 label="Note"
                 type="textarea"
