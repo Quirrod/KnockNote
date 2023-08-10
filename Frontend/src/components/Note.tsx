@@ -4,21 +4,22 @@ import Button from "./Button";
 import { ConfirmModal } from "./ConfirmModal";
 import Modal from "./Modal";
 import NoteForm from "./NoteForm";
+import { INote } from "../models/note.model";
 
-export const Note = () => {
+interface NoteProps {
+  note: INote;
+}
+
+export const Note: React.FC<NoteProps> = ({ note }) => {
   const [isOpenDelete, setIsOpenDelete] = React.useState(false);
   const [isOpenArchive, setIsOpenArchive] = React.useState(false);
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
 
   return (
-    <article className="flex w-full rounded overflow-hidden shadow-2xl">
+    <article className="flex w-full rounded overflow-hidden shadow-2xl justify-between">
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">Note 1</div>
-        <p className="text-base line-clamp-3">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus
-          quia, nulla! Maiores et perferendis eaque, exercitationem praesentium
-          nihil.
-        </p>
+        <div className="font-bold text-xl mb-2">{note.title}</div>
+        <p className="text-base line-clamp-3">{note.description}</p>
       </div>
       <div className="px-2 pt-4 pb-2 self-center">
         <Button onClick={() => setIsOpenEdit(true)} theme="primary">
