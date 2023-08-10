@@ -11,6 +11,9 @@ dependencies:
   axios:
     specifier: ^1.4.0
     version: 1.4.0
+  iconoir-react:
+    specifier: ^6.11.0
+    version: 6.11.0(react@18.2.0)
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -1289,6 +1292,14 @@ packages:
     dependencies:
       function-bind: 1.1.1
     dev: true
+
+  /iconoir-react@6.11.0(react@18.2.0):
+    resolution: {integrity: sha512-+1RgmEWh/9H0aYR2e8sDL5elDUYnkyOXO0E+RnwhkjhJY36Lge6r/9nv1n1FvDXoeFY48omkPUl8s/ciA0XOAg==}
+    peerDependencies:
+      react: ^16.8.6 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /ignore@5.2.4:
     resolution: {integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==}
