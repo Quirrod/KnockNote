@@ -67,7 +67,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], NotesController.prototype, "updateUsers", null);
 __decorate([
-    (0, common_1.Put)('/:id/delete'),
+    (0, common_1.Delete)('/:id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
