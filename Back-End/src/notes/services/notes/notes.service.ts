@@ -30,7 +30,6 @@ export class NotesService {
         limit: number,
         archived: boolean,
     ) {
-        console.log(page, limit, archived);
         const data = this.userRepository.findAndCount({
             where: {
                 isArchived: archived,
@@ -39,7 +38,6 @@ export class NotesService {
             take: limit,
             skip: (page - 1) * limit,
         });
-        console.log(await data);
         return data;
     }
 

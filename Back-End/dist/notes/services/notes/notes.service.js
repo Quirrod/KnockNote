@@ -33,7 +33,6 @@ let NotesService = exports.NotesService = class NotesService {
         });
     }
     async findAllNotes(page, limit, archived) {
-        console.log(page, limit, archived);
         const data = this.userRepository.findAndCount({
             where: {
                 isArchived: archived,
@@ -42,7 +41,6 @@ let NotesService = exports.NotesService = class NotesService {
             take: limit,
             skip: (page - 1) * limit,
         });
-        console.log(await data);
         return data;
     }
     updateNote(id, updateNoteDto) {
