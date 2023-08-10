@@ -1,8 +1,19 @@
-import { Notes, Menu } from "iconoir-react";
+import { Notes, Menu, Plus } from "iconoir-react";
+import Button from "./Button";
+import Modal from "./Modal";
+import NoteForm from "./NoteForm";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 export const Navbar = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const linkActiveClass =
+    "px-3 py-2 rounded-md text-sm font-medium text-white bg-primary focus:outline-none focus:text-white focus:bg-secondary";
+  const linkInactiveClass =
+    "px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700";
+
   return (
-    <header className="sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3 w-full">
+    <header className="sm:flex sm:justify-between sm:items-center sm:py-3 w-full">
       <div className="flex items-center justify-between px-4 py-3 sm:p-0">
         <div>
           <Notes />
@@ -16,24 +27,34 @@ export const Navbar = () => {
           </button>
         </div>
       </div>
-      <div className="items-center">
-        <button
-          type="button"
-          className="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-        >
-          New Note
-        </button>
+      <div className="fixed right-1/2">
+        <Button onClick={() => setModalOpen(true)} theme="secondary">
+          New Note <Plus />
+        </Button>
       </div>
       <div className="hidden sm:block sm:ml-6">
         <div className="flex space-x-4">
-          <a
-            href="#"
-            className=" hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? linkActiveClass : linkInactiveClass
+            }
+            to="/"
           >
             Home
-          </a>
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? linkActiveClass : linkInactiveClass
+            }
+            to="/archived"
+          >
+            Archived Notes
+          </NavLink>
         </div>
       </div>
+      <Modal isOpen={modalOpen} setOpen={setModalOpen} onClose={() => {}}>
+        <NoteForm setModalOpen={setModalOpen} />
+      </Modal>
     </header>
   );
 };
