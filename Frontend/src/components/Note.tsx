@@ -56,7 +56,7 @@ export const Note: React.FC<NoteProps> = ({ note }) => {
         setOpen={setIsOpenEdit}
         onClose={() => setIsOpenEdit(false)}
       >
-        <NoteForm setModalOpen={setIsOpenEdit} />
+        <NoteForm note={note} setModalOpen={setIsOpenEdit} />
       </Modal>
     </article>
   );

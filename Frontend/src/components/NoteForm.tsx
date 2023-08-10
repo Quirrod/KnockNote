@@ -1,11 +1,12 @@
 "use client";
-import { Dispatch } from "react";
+import { Dispatch, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import CustomInput from "./formComponents/CustomInput";
 import Button from "./Button";
 import { useMutation } from "@tanstack/react-query";
 import { noteService } from "../services/note.service";
 import { AxiosResponse } from "axios";
+import { INote } from "../models/note.model";
 
 interface NoteFormInputs {
   title: string;
@@ -14,36 +15,52 @@ interface NoteFormInputs {
 
 interface NoteFormProps {
   setModalOpen: Dispatch<React.SetStateAction<boolean>>;
+  note?: INote;
 }
 
-function NoteForm({ setModalOpen }: NoteFormProps) {
+function NoteForm({ setModalOpen, note }: NoteFormProps) {
   const methods = useForm<NoteFormInputs>();
 
-  const createNoteMutation = useMutation({
+  useEffect(() => {
+    if (!note) return;
+    methods.reset({
+      title: note.title,
+      description: note.description,
+    });
+  }, [note]);
+
+  const NoteMutation = useMutation({
     mutationFn: (data: NoteFormInputs) => {
-      const postNote = noteService.createNote(data);
+      // if isCreate is true, create a new note
+      // else update the note
+      if (note) {
+        const postNote = noteService.updateNote(note?.id!, data);
+        return postNote;
+      } else {
+        const putNote = noteService.createNote(data);
+        return putNote;
+      }
       // toast.promise(postCode, {
       //   loading: "Sharing Code...",
       //   success: "Code Shared successfully",
       //   error: "Error sharing code",
       // });
-
-      return postNote;
     },
     onSuccess: (response: AxiosResponse) => {
-      // router.push(`/code/${response.data.id}`);
       setModalOpen(false);
     },
   });
 
   function onSubmit(data: NoteFormInputs) {
-    createNoteMutation.mutate(data);
+    NoteMutation.mutate(data);
   }
 
   return (
     <>
       <div className="relative flex flex-col rounded-2xl items-center  gap-2">
-        <p className="text-sm text-white">New Note</p>
+        <p className="text-sm text-white">
+          {note ? "Edit Note" : "Create Note"}
+        </p>
         <FormProvider {...methods}>
           <form
             className="w-full flex flex-col gap-4"
@@ -70,7 +87,7 @@ function NoteForm({ setModalOpen }: NoteFormProps) {
             </span>
             <div className="flex gap-2">
               <Button type="submit" theme="secondary">
-                Create Note
+                {note ? "Update" : "Create"}
               </Button>
               <Button
                 type="button"

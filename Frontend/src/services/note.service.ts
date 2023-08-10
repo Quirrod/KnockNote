@@ -13,7 +13,7 @@ export const noteService = {
         return response;
     },
 
-    async getNote(id: string): Promise<AxiosResponse<INote>> {
+    async getNote(id: number): Promise<AxiosResponse<INote>> {
         const response = await serviceInstance.get(`/notes/${id}`);
         return response;
     },
@@ -23,12 +23,12 @@ export const noteService = {
         return response;
     },
 
-    async updateNote(note: INote): Promise<AxiosResponse<INote>> {
-        const response = await serviceInstance.put(`/notes/${note.id}`, note);
+    async updateNote(id: number, note: INote): Promise<AxiosResponse<INote>> {
+        const response = await serviceInstance.put(`/notes/${id}`, note);
         return response;
     },
 
-    async deleteNote(id: string): Promise<AxiosResponse<INote>> {
+    async deleteNote(id: number): Promise<AxiosResponse<INote>> {
         const response = await serviceInstance.delete(`/notes/${id}`);
         return response;
     }
