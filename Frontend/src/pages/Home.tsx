@@ -8,7 +8,7 @@ export const Home = () => {
       <h2 className="text-2xl font-medium text-text">
         KnockNote is a simple note taking app
       </h2>
-      <div className="flex flex-wrap">
+      <div className="flex justify-between flex-wrap">
         <Note />
         <Note />
         <Note />
