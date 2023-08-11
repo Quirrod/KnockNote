@@ -7,9 +7,10 @@ import NoteForm from "./NoteForm";
 import { INote } from "../models/note.model";
 import { noteService } from "../services/note.service";
 import { useMutation } from "@tanstack/react-query";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { useLocation } from "react-router";
 import { NoteModal } from "./NoteModal";
+import { toast } from "sonner";
 
 interface NoteProps {
   note: INote;
@@ -27,16 +28,20 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
     mutationFn: (data: INote) => {
       data.isArchived = true;
       const archiveNote = noteService.updateNote(data?.id!, data);
+      toast.promise(archiveNote, {
+        loading: "Archiving note...",
+        success: "Note archived successfully",
+        error: "Error archiving note",
+      });
       return archiveNote;
-      // toast.promise(postCode, {
-      //   loading: "Sharing Code...",
-      //   success: "Code Shared successfully",
-      //   error: "Error sharing code",
-      // });
     },
     onSuccess: (response: AxiosResponse) => {
       refetch();
       setIsOpenArchive(false);
+    },
+
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(error.response?.data?.message || "Error archiving note");
     },
   });
 
@@ -47,16 +52,19 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
   const DeleteNoteMutation = useMutation({
     mutationFn: (data: INote) => {
       const deleteNote = noteService.deleteNote(data?.id!);
+      toast.promise(deleteNote, {
+        loading: "Deleting note...",
+        success: "Note deleted successfully",
+        error: "Error deleting note",
+      });
       return deleteNote;
-      // toast.promise(postCode, {
-      //   loading: "Sharing Code...",
-      //   success: "Code Shared successfully",
-      //   error: "Error sharing code",
-      // });
     },
     onSuccess: (response: AxiosResponse) => {
       refetch();
       setIsOpenDelete(false);
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(error.response?.data?.message || "Error deleting note");
     },
   });
 

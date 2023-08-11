@@ -5,9 +5,10 @@ import CustomInput from "./formComponents/CustomInput";
 import Button from "./Button";
 import { useMutation } from "@tanstack/react-query";
 import { noteService } from "../services/note.service";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { INote } from "../models/note.model";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 interface NoteFormInputs {
   title: string;
@@ -33,19 +34,25 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
   }, [note]);
 
   const NoteMutation = useMutation({
-    mutationFn: (data: NoteFormInputs) => {
+    mutationFn: async (data: NoteFormInputs) => {
       if (note) {
         const postNote = noteService.updateNote(note?.id!, data);
+        toast.promise(postNote, {
+          loading: "Updating note...",
+          success: "Note updated successfully",
+          error: "Error updating note",
+        });
         return postNote;
       } else {
         const putNote = noteService.createNote(data);
+        console.log("TCL: NoteForm -> putNote", putNote);
+        toast.promise(putNote, {
+          loading: "Creating note...",
+          success: "Note created successfully",
+          error: "Error creating note",
+        });
         return putNote;
       }
-      // toast.promise(postCode, {
-      //   loading: "Sharing Code...",
-      //   success: "Code Shared successfully",
-      //   error: "Error sharing code",
-      // });
     },
     onSuccess: (response: AxiosResponse) => {
       if (window.location.pathname === "/archived") {
@@ -54,6 +61,9 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
         refetch();
       }
       setModalOpen(false);
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(error.response?.data?.message || "Error archiving note");
     },
   });
 
@@ -79,6 +89,10 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
                 type="text"
                 validations={{
                   required: "Title is required",
+                  minLength: {
+                    value: 3,
+                    message: "Title must be at least 3 characters long",
+                  },
                 }}
               />
               <CustomInput
@@ -88,6 +102,10 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
                 type="textarea"
                 validations={{
                   required: "Note is required",
+                  minLength: {
+                    value: 8,
+                    message: "Note must be at least 8 characters long",
+                  },
                 }}
               />
             </span>

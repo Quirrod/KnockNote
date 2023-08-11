@@ -15,7 +15,7 @@ export const Navbar = () => {
       <div className="flex items-center justify-between px-4 py-3 sm:p-0">
         <div className="flex items-center">
           <Notes />
-          <span className="ml-2 text-xl font-bold">KnockNote</span>
+          <span className="hidden sm:block ml-2 text-xl font-bold">KnockNote</span>
         </div>
         <div className="sm:hidden">
           <button

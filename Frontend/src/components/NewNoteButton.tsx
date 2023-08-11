@@ -19,7 +19,7 @@ export const NewNoteButton: React.FC<NewNoteButtonProps> = ({ refetch }) => {
       <div
         className="fixed right-1/2
       transform translate-x-1/2
-      sm:-translate-x-0 sm:top-2 z-10"
+      sm:-translate-x-0 top-2 z-10"
       >
         <Button onClick={() => setModalOpen(true)} theme="secondary">
           New Note <Plus />

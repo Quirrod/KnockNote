@@ -1,7 +1,7 @@
-import React from "react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { Outlet } from "react-router-dom";
+import { Toaster } from "sonner";
 
 export const Layout = () => {
   return (
@@ -11,6 +11,7 @@ export const Layout = () => {
         <Outlet />
       </main>
       <Footer />
+      <Toaster richColors/>
     </div>
   );
 };

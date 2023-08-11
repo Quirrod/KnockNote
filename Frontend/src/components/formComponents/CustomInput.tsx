@@ -90,7 +90,7 @@ function AreaInput({ id, validations, rows = 10 }: InputProps) {
   const { register } = useFormContext();
   return (
     <textarea
-      className="border border-secondaryDark rounded-3xl p-3 font-lato"
+      className="py-2 px-3 font-lato"
       // name={id}
       id={id}
       cols={40}
@@ -111,7 +111,7 @@ function TextInput({ id, validations, value, type, disabled }: InputProps) {
   return (
     <input
       disabled={disabled}
-      className="border border-secondaryDark rounded-full py-2 px-3 font-lato"
+      className="py-2 px-3 font-lato"
       type={type}
       {...register(id, validations)}
       defaultValue={value}
