@@ -44,10 +44,11 @@ let NotesService = exports.NotesService = class NotesService {
         return data;
     }
     updateNote(id, updateNoteDto) {
+        updateNoteDto.updatedAt = new Date();
         return this.userRepository.update(id, updateNoteDto);
     }
     deleteNote(id) {
-        return this.userRepository.update(id, { isDeleted: true });
+        return this.userRepository.update(id, { isDeleted: true, deletedAt: new Date() });
     }
 };
 exports.NotesService = NotesService = __decorate([

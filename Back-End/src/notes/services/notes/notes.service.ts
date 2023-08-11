@@ -42,10 +42,11 @@ export class NotesService {
     }
 
     updateNote(id: number, updateNoteDto: UpdateNoteDto) {
+        updateNoteDto.updatedAt = new Date();
         return this.userRepository.update(id, updateNoteDto);
     }
 
     deleteNote(id: number) {
-        return this.userRepository.update(id, { isDeleted: true });
+        return this.userRepository.update(id, { isDeleted: true, deletedAt: new Date() });
     }
 }

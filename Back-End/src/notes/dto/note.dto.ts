@@ -22,6 +22,10 @@ export class UpdateNoteDto {
     @IsNotEmpty()
     @IsOptional()
     isArchived: boolean;
+
+    @IsNotEmpty()
+    @IsOptional()
+    updatedAt: Date;
 }
 
 export class GetNoteDto {

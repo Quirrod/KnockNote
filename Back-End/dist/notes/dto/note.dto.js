@@ -42,6 +42,11 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], UpdateNoteDto.prototype, "isArchived", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Date)
+], UpdateNoteDto.prototype, "updatedAt", void 0);
 class GetNoteDto {
 }
 exports.GetNoteDto = GetNoteDto;
