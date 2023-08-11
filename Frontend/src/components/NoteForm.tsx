@@ -9,10 +9,13 @@ import { AxiosError } from "axios";
 import { INote } from "../models/note.model";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { Tag } from "./Tag";
+import { ITag } from "../models/tag.model";
 
 interface NoteFormInputs {
   title: string;
   description: string;
+  tags: string;
 }
 
 interface NoteFormProps {
@@ -25,6 +28,7 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
   const methods = useForm<NoteFormInputs>();
   const navigate = useNavigate();
   const [disableButton, setDisableButton] = useState(false);
+  const [tags, setTags] = useState<ITag[]>([]);
 
   useEffect(() => {
     if (!note) return;
@@ -45,7 +49,10 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
         });
         return postNote;
       } else {
-        const putNote = noteService.createNote(data);
+        const putNote = noteService.createNote({
+          note: data,
+          tags: tags,
+        });
         toast.promise(putNote, {
           loading: "Creating note...",
           success: "Note created successfully",
@@ -70,7 +77,7 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
   });
 
   function onSubmit(data: NoteFormInputs) {
-    console.log("te ")
+    console.log("te ");
     setDisableButton(true);
     NoteMutation.mutate(data);
   }
@@ -83,36 +90,85 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
         </p>
         <FormProvider {...methods}>
           <form
-            className="w-full flex flex-col gap-4"
+            className="w-full flex flex-col gap-2"
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <span>
-              <CustomInput
-                id="title"
-                label="Title"
-                type="text"
-                validations={{
-                  required: "Title is required",
-                  minLength: {
-                    value: 3,
-                    message: "Title must be at least 3 characters long",
-                  },
-                }}
-              />
-              <CustomInput
-                id="description"
-                rows={4}
-                label="Note"
-                type="textarea"
-                validations={{
-                  required: "Note is required",
-                  minLength: {
-                    value: 8,
-                    message: "Note must be at least 8 characters long",
-                  },
-                }}
-              />
-            </span>
+            <CustomInput
+              id="title"
+              label="Title"
+              type="text"
+              validations={{
+                required: "Title is required",
+                minLength: {
+                  value: 3,
+                  message: "Title must be at least 3 characters long",
+                },
+              }}
+            />
+            <CustomInput
+              id="description"
+              rows={4}
+              label="Note"
+              type="textarea"
+              validations={{
+                required: "Note is required",
+                minLength: {
+                  value: 8,
+                  message: "Note must be at least 8 characters long",
+                },
+              }}
+            />
+            <CustomInput
+              id="tags"
+              label="Tags"
+              type="text"
+              validations={{
+                minLength: {
+                  value: 3,
+                  message: "Tags must be at least 3 characters long",
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9]+$/i,
+                  message: "Tags must not contain spaces",
+                },
+              }}
+            />
+
+            <Button
+              onClick={async () => {
+                // trigger validations on tags input
+                const isTagCorrect = await methods.trigger("tags");
+                // if tag already exist show message
+                if (
+                  tags.find((tag) => tag.name === methods.getValues("tags"))
+                ) {
+                  methods.setError("tags", {
+                    type: "manual",
+                    message: "Tag already exist",
+                  });
+                  return;
+                }
+
+                if (!isTagCorrect || !methods.getValues("tags")) return;
+                setTags([...tags, { name: methods.getValues("tags") }]);
+                methods.setValue("tags", "");
+              }}
+              type="button"
+              theme="secondary"
+            >
+              Add tag
+            </Button>
+
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag, index) => (
+                <Tag
+                  isForm={true}
+                  setTags={setTags}
+                  key={index}
+                  name={tag.name}
+                />
+              ))}
+            </div>
             <div className="flex gap-2">
               <Button disable={disableButton} type="submit" theme="secondary">
                 {note ? "Update" : "Create"}

@@ -6,19 +6,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NotesModule = void 0;
+exports.TagsController = void 0;
 const common_1 = require("@nestjs/common");
-const notes_controller_1 = require("./controllers/notes/notes.controller");
-const notes_service_1 = require("./services/notes/notes.service");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("../typeorm");
-let NotesModule = exports.NotesModule = class NotesModule {
+let TagsController = exports.TagsController = class TagsController {
 };
-exports.NotesModule = NotesModule = __decorate([
-    (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([typeorm_2.Note]), typeorm_1.TypeOrmModule.forFeature([typeorm_2.Tag]),],
-        controllers: [notes_controller_1.NotesController],
-        providers: [notes_service_1.NotesService]
-    })
-], NotesModule);
-//# sourceMappingURL=notes.module.js.map
+exports.TagsController = TagsController = __decorate([
+    (0, common_1.Controller)('tags')
+], TagsController);
+//# sourceMappingURL=tags.controller.js.map

@@ -13,6 +13,7 @@ const app_service_1 = require("./app.service");
 const notes_module_1 = require("./notes/notes.module");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
+const tags_module_1 = require("./tags/tags.module");
 const typeorm_2 = require("./typeorm");
 let AppModule = exports.AppModule = class AppModule {
 };
@@ -34,7 +35,8 @@ exports.AppModule = AppModule = __decorate([
                 }),
                 inject: [config_1.ConfigService],
             }),
-            notes_module_1.NotesModule
+            notes_module_1.NotesModule,
+            tags_module_1.TagsModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

@@ -1,4 +1,6 @@
 import { Note } from "./note.entity";
-declare const entities: (typeof Note)[];
+import { Tag } from "./tag.entity";
+declare const entities: (typeof Note | typeof Tag)[];
 export { Note };
+export { Tag };
 export default entities;

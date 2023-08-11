@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { NotesModule } from './notes/notes.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TagsModule } from './tags/tags.module';
 import entities from './typeorm';
 
 @Module({
@@ -23,7 +24,8 @@ import entities from './typeorm';
       }),
       inject: [ConfigService],
     }),
-    NotesModule
+    NotesModule,
+    TagsModule
   ],
   controllers: [AppController],
   providers: [AppService],

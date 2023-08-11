@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateNoteDto, GetNoteDto, UpdateNoteDto } from 'src/notes/dto/note.dto';
 import { NotesService } from 'src/notes/services/notes/notes.service';
+import { CreateTagDto } from 'src/tags/dto/tag.dto';
 import { Note } from 'src/typeorm';
 
 @Controller('notes')
@@ -24,7 +25,7 @@ export class NotesController {
 
     @Post()
     @UsePipes(ValidationPipe)
-    createNotes(@Body() createNoteDto: CreateNoteDto): Promise<Note> {
+    createNotes(@Body() createNoteDto: { note: CreateNoteDto, tags: CreateTagDto[] }): Promise<Note> {
         return this.noteService.createNote(createNoteDto);
     }
 

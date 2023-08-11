@@ -1,3 +1,4 @@
+import { ITag } from './../models/tag.model';
 import { AxiosResponse } from 'axios';
 import { INote } from "../models/note.model";
 import { serviceInstance } from "./instance";
@@ -18,8 +19,11 @@ export const noteService = {
         return response;
     },
 
-    async createNote(note: INote): Promise<AxiosResponse<INote>> {
-        const response = await serviceInstance.post('/notes', note);
+    async createNote({ note, tags }: {
+        note: INote,
+        tags: ITag[]
+    }): Promise<AxiosResponse<INote>> {
+        const response = await serviceInstance.post('/notes', { note, tags });
         return response;
     },
 

@@ -18,12 +18,20 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("../../../typeorm");
 const typeorm_3 = require("typeorm");
 let NotesService = exports.NotesService = class NotesService {
-    constructor(userRepository) {
+    constructor(userRepository, tagRepository) {
         this.userRepository = userRepository;
+        this.tagRepository = tagRepository;
     }
-    createNote(createNoteDto) {
-        const newNote = this.userRepository.create(createNoteDto);
-        return this.userRepository.save(newNote);
+    async createNote(createNoteDto) {
+        const newNote = await this.userRepository.create(createNoteDto.note);
+        const result = await this.userRepository.save(newNote);
+        createNoteDto.tags.forEach(async (tag) => {
+            tag.noteId = result.id;
+            await this.tagRepository.create(tag);
+            await this.tagRepository.save(tag);
+        });
+        console.log("TCL: NotesService -> result", result);
+        return result;
     }
     findNote(id) {
         return this.userRepository.findOne({
@@ -57,6 +65,8 @@ let NotesService = exports.NotesService = class NotesService {
 exports.NotesService = NotesService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(typeorm_2.Note)),
-    __metadata("design:paramtypes", [typeorm_3.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(typeorm_2.Tag)),
+    __metadata("design:paramtypes", [typeorm_3.Repository,
+        typeorm_3.Repository])
 ], NotesService);
 //# sourceMappingURL=notes.service.js.map
