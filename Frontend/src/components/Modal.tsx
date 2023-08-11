@@ -26,7 +26,7 @@ const Modal: React.FC<ModalProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.2 }}
-          className="bg-transparent  fixed inset-0 flex items-center justify-center z-50  backdrop-blur-sm"
+          className="bg-transparent fixed inset-0 flex items-start justify-center z-50  backdrop-blur-sm"
         >
           <div className="bg-secondary rounded-lg p-8 w-full md:w-1/2 lg:w-1/3">
             <div className="flex justify-end">
@@ -37,7 +37,7 @@ const Modal: React.FC<ModalProps> = ({
                 <Cancel />
               </button>
             </div>
-            <div className="mt-4">{children}</div>
+            <div className="">{children}</div>
           </div>
         </motion.div>
       )}
