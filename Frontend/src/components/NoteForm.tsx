@@ -15,7 +15,7 @@ import { ITag } from "../models/tag.model";
 interface NoteFormInputs {
   title: string;
   description: string;
-  tags: string;
+  tag: string;
 }
 
 interface NoteFormProps {
@@ -119,8 +119,8 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
               }}
             />
             <CustomInput
-              id="tags"
-              label="Tags"
+              id="tag"
+              label="Add Tag"
               type="text"
               validations={{
                 minLength: {
@@ -137,21 +137,21 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
             <Button
               onClick={async () => {
                 // trigger validations on tags input
-                const isTagCorrect = await methods.trigger("tags");
+                const isTagCorrect = await methods.trigger("tag");
                 // if tag already exist show message
                 if (
-                  tags.find((tag) => tag.name === methods.getValues("tags"))
+                  tags.find((tag) => tag.name === methods.getValues("tag"))
                 ) {
-                  methods.setError("tags", {
+                  methods.setError("tag", {
                     type: "manual",
                     message: "Tag already exist",
                   });
                   return;
                 }
 
-                if (!isTagCorrect || !methods.getValues("tags")) return;
-                setTags([...tags, { name: methods.getValues("tags") }]);
-                methods.setValue("tags", "");
+                if (!isTagCorrect || !methods.getValues("tag")) return;
+                setTags([...tags, { name: methods.getValues("tag") }]);
+                methods.setValue("tag", "");
               }}
               type="button"
               theme="secondary"

@@ -28,7 +28,8 @@ export const noteService = {
     },
 
     async updateNote(id: number, note: INote): Promise<AxiosResponse<INote>> {
-        const response = await serviceInstance.put(`/notes/${id}`, note);
+        const { tags, ...restNote } = note;
+        const response = await serviceInstance.put(`/notes/${id}`, restNote);
         return response;
     },
 

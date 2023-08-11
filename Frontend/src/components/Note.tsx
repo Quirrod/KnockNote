@@ -11,6 +11,8 @@ import { AxiosError } from "axios";
 import { useLocation } from "react-router";
 import { NoteModal } from "./NoteModal";
 import { toast } from "sonner";
+import { ITag } from "../models/tag.model";
+import { Tag } from "./Tag";
 
 interface NoteProps {
   note: INote;
@@ -28,7 +30,7 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
 
   const ArchiveNoteMutation = useMutation({
     mutationFn: (data: INote) => {
-      data.isArchived = true;
+      data.isArchived = !isArchived;
       const archiveNote = noteService.updateNote(data?.id!, data);
       toast.promise(archiveNote, {
         loading: isArchived ? "Unarchiving note..." : "Archiving note...",
@@ -98,6 +100,12 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
         >
           <h2 className="font-bold text-xl mb-2">{note.title}</h2>
           <p className="text-base line-clamp-3">{note.description}</p>
+          {/* put tags show max 3  at the bottom*/}
+          <div className="flex flex-wrap justify-end fixed right-0 bottom-0 z-10 gap-1">
+            {note.tags?.map((tag) => (
+              <Tag key={tag.id} name={tag.name} />
+            ))}
+          </div>
         </div>
         <div className="flex sm:block pt-4 pb-2 self-center">
           <Button onClick={() => setIsOpenEdit(true)} theme="primary">
