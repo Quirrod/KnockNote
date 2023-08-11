@@ -27,7 +27,7 @@ export const Home = () => {
         className="flex flex-wrap gap-4 sm:grid sm:auto-rows-auto sm:grid-cols-auto-fill-25 sm:gap-1"
       >
         {isSuccess &&
-          data.data[0].map((note) => (
+          data?.data[0].map((note) => (
             <Note refetch={refetch} note={note} key={note.id} />
           ))}
         {isLoading && <Loader />}
