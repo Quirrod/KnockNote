@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { noteService } from "../services/note.service";
 import { AxiosResponse } from "axios";
 import { INote } from "../models/note.model";
+import { useNavigate } from "react-router";
 
 interface NoteFormInputs {
   title: string;
@@ -21,6 +22,8 @@ interface NoteFormProps {
 
 function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
   const methods = useForm<NoteFormInputs>();
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!note) return;
     methods.reset({
@@ -45,7 +48,11 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
       // });
     },
     onSuccess: (response: AxiosResponse) => {
-      refetch();
+      if (window.location.pathname === "/archived") {
+        navigate("/");
+      } else {
+        refetch();
+      }
       setModalOpen(false);
     },
   });
