@@ -58,6 +58,7 @@ function Button({
       ${buttonConfig[theme]?.textColor} ${
         !disable && buttonConfig[theme]?.bgColorHover
       } 
+      ${disable && "opacity-50 cursor-not-allowed"}
       ${!disable && buttonConfig[theme]?.textColorHover} ${
         buttonConfig[theme]?.borderHover
       } 

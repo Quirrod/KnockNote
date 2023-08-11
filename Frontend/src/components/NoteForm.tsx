@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, useEffect } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import CustomInput from "./formComponents/CustomInput";
 import Button from "./Button";
@@ -24,6 +24,7 @@ interface NoteFormProps {
 function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
   const methods = useForm<NoteFormInputs>();
   const navigate = useNavigate();
+  const [disableButton, setDisableButton] = useState(false);
 
   useEffect(() => {
     if (!note) return;
@@ -45,7 +46,6 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
         return postNote;
       } else {
         const putNote = noteService.createNote(data);
-        console.log("TCL: NoteForm -> putNote", putNote);
         toast.promise(putNote, {
           loading: "Creating note...",
           success: "Note created successfully",
@@ -60,14 +60,18 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
       } else {
         refetch();
       }
+      setDisableButton(false);
       setModalOpen(false);
     },
     onError: (error: AxiosError<{ message: string }>) => {
+      setDisableButton(false);
       toast.error(error.response?.data?.message || "Error archiving note");
     },
   });
 
   function onSubmit(data: NoteFormInputs) {
+    console.log("te ")
+    setDisableButton(true);
     NoteMutation.mutate(data);
   }
 
@@ -110,7 +114,7 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
               />
             </span>
             <div className="flex gap-2">
-              <Button type="submit" theme="secondary">
+              <Button disable={disableButton} type="submit" theme="secondary">
                 {note ? "Update" : "Create"}
               </Button>
               <Button
