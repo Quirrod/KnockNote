@@ -13,8 +13,9 @@ export const Navbar = () => {
   return (
     <header className="sm:flex sm:justify-between sm:items-center sm:py-3 w-full">
       <div className="flex items-center justify-between px-4 py-3 sm:p-0">
-        <div>
+        <div className="flex items-center">
           <Notes />
+          <span className="ml-2 text-xl font-bold">KnockNote</span>
         </div>
         <div className="sm:hidden">
           <button
