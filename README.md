@@ -3,11 +3,17 @@
 This repository contains the code for the ENSOLVERS Challenge, consisting of both a frontend and a backend application.
 
 ## Table of Contents
-- [Prerequisites](#prerequisites)
-- [Frontend Dependencies](#frontend-dependencies)
-- [Backend Dependencies](#backend-dependencies)
-- [Getting Started](#getting-started)
-- [Notes - Important](#notes)
+- [Repository Setup for ENSOLVERS Challenge](#repository-setup-for-ensolvers-challenge)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [FrontEnd dependencies](#frontend-dependencies)
+    - [Dependencies:](#dependencies)
+    - [Dev Dependencies:](#dev-dependencies)
+  - [Backend Dependencies](#backend-dependencies)
+    - [Dependencies:](#dependencies-1)
+    - [Dev Dependencies:](#dev-dependencies-1)
+  - [Getting Started](#getting-started)
+  - [Notes](#notes)
 
 ## Prerequisites
 
@@ -163,5 +169,6 @@ Follow these steps to set up and run the application:
 ## Notes
 
 - Make sure to replace `DB_USER` and `DB_PASSWORD` in the `.env` file with your actual PostgreSQL credentials.
+- Script for running in linux environment is in the root of the project, it is called `run.sh` and it is executable. (Make sure to give it execution permissions)
 
 ---
