@@ -13,7 +13,7 @@ export const Home = () => {
     queryFn: () => noteService.getNotes(),
     keepPreviousData: true,
   });
-  const [parent, enableAnimations] = useAutoAnimate();
+  const [parent] = useAutoAnimate();
 
   return (
     <>

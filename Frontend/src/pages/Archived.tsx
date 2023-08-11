@@ -13,7 +13,7 @@ export const Archived = () => {
     queryFn: () => noteService.getNotes(6, 1, true),
     keepPreviousData: true,
   });
-  const [parent, enableAnimations] = useAutoAnimate();
+  const [parent] = useAutoAnimate();
 
   return (
     <>

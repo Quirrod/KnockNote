@@ -5,7 +5,7 @@ import CustomInput from "./formComponents/CustomInput";
 import Button from "./Button";
 import { useMutation } from "@tanstack/react-query";
 import { noteService } from "../services/note.service";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 import { INote } from "../models/note.model";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -54,7 +54,7 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
         return putNote;
       }
     },
-    onSuccess: (response: AxiosResponse) => {
+    onSuccess: () => {
       if (window.location.pathname === "/archived") {
         navigate("/");
       } else {

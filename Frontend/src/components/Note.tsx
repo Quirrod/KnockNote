@@ -7,7 +7,7 @@ import NoteForm from "./NoteForm";
 import { INote } from "../models/note.model";
 import { noteService } from "../services/note.service";
 import { useMutation } from "@tanstack/react-query";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 import { useLocation } from "react-router";
 import { NoteModal } from "./NoteModal";
 import { toast } from "sonner";
@@ -38,7 +38,7 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
       });
       return archiveNote;
     },
-    onSuccess: (response: AxiosResponse) => {
+    onSuccess: () => {
       refetch();
       setIsOpenArchive(false);
     },
@@ -66,7 +66,7 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
       });
       return deleteNote;
     },
-    onSuccess: (response: AxiosResponse) => {
+    onSuccess: () => {
       refetch();
       setIsOpenDelete(false);
     },
