@@ -36,6 +36,8 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
       title: note.title,
       description: note.description,
     });
+
+    setTags(note.tags!);
   }, [note]);
 
   const NoteMutation = useMutation({
@@ -139,9 +141,7 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
                 // trigger validations on tags input
                 const isTagCorrect = await methods.trigger("tag");
                 // if tag already exist show message
-                if (
-                  tags.find((tag) => tag.name === methods.getValues("tag"))
-                ) {
+                if (tags.find((tag) => tag.name === methods.getValues("tag"))) {
                   methods.setError("tag", {
                     type: "manual",
                     message: "Tag already exist",
