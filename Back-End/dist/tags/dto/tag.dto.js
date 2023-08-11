@@ -28,6 +28,11 @@ class UpdateTagDto {
 exports.UpdateTagDto = UpdateTagDto;
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], UpdateTagDto.prototype, "id", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(3),
     __metadata("design:type", String)
 ], UpdateTagDto.prototype, "name", void 0);
@@ -41,4 +46,8 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Date)
 ], UpdateTagDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Number)
+], UpdateTagDto.prototype, "noteId", void 0);
 //# sourceMappingURL=tag.dto.js.map

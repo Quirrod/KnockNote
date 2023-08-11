@@ -1,5 +1,5 @@
 import { CreateNoteDto, UpdateNoteDto } from 'src/notes/dto/note.dto';
-import { CreateTagDto } from 'src/tags/dto/tag.dto';
+import { CreateTagDto, UpdateTagDto } from 'src/tags/dto/tag.dto';
 import { Note, Tag } from 'src/typeorm';
 import { Repository } from 'typeorm';
 export declare class NotesService {
@@ -12,6 +12,10 @@ export declare class NotesService {
     }): Promise<Note>;
     findNote(id: number): Promise<Note>;
     findAllNotes(page: number, limit: number, archived: boolean): Promise<[Note[], number]>;
-    updateNote(id: number, updateNoteDto: UpdateNoteDto): Promise<import("typeorm").UpdateResult>;
+    updateNote(id: number, updateNoteDto: {
+        note: UpdateNoteDto;
+        tags: UpdateTagDto[];
+        originalTags: UpdateTagDto[];
+    }): Promise<import("typeorm").UpdateResult>;
     deleteNote(id: number): Promise<import("typeorm").UpdateResult>;
 }

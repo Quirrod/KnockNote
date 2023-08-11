@@ -11,6 +11,10 @@ export class CreateTagDto {
 
 export class UpdateTagDto {
     @IsNotEmpty()
+    @IsOptional()
+    id: number;
+
+    @IsNotEmpty()
     @MinLength(3)
     name: string;
 
@@ -21,5 +25,8 @@ export class UpdateTagDto {
     @IsNotEmpty()
     @IsOptional()
     updatedAt: Date;
+
+    @IsNotEmpty()
+    noteId: number;
 }
 

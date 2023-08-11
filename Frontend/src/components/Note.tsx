@@ -11,7 +11,6 @@ import { AxiosError } from "axios";
 import { useLocation } from "react-router";
 import { NoteModal } from "./NoteModal";
 import { toast } from "sonner";
-import { ITag } from "../models/tag.model";
 import { Tag } from "./Tag";
 
 interface NoteProps {
@@ -31,7 +30,10 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
   const ArchiveNoteMutation = useMutation({
     mutationFn: (data: INote) => {
       data.isArchived = !isArchived;
-      const archiveNote = noteService.updateNote(data?.id!, data);
+      const archiveNote = noteService.updateNote(data?.id!, {
+        note: data,
+        originalTags: note.tags!,
+      });
       toast.promise(archiveNote, {
         loading: isArchived ? "Unarchiving note..." : "Archiving note...",
         success: isArchived

@@ -27,9 +27,21 @@ export const noteService = {
         return response;
     },
 
-    async updateNote(id: number, note: INote): Promise<AxiosResponse<INote>> {
+    async updateNote(id: number, {
+        note,
+        updatedTags,
+        originalTags
+    }: {
+        note: INote,
+        updatedTags?: ITag[]
+        originalTags: ITag[]
+    }): Promise<AxiosResponse<INote>> {
         const { tags, ...restNote } = note;
-        const response = await serviceInstance.put(`/notes/${id}`, restNote);
+        const response = await serviceInstance.put(`/notes/${id}`, {
+            note: restNote,
+            tags: updatedTags || [],
+            originalTags: originalTags || []
+        });
         return response;
     },
 

@@ -54,9 +54,24 @@ let NotesService = exports.NotesService = class NotesService {
         });
         return data;
     }
-    updateNote(id, updateNoteDto) {
-        updateNoteDto.updatedAt = new Date();
-        return this.userRepository.update(id, updateNoteDto);
+    async updateNote(id, updateNoteDto) {
+        const deletedTags = updateNoteDto.originalTags.filter(originalTag => {
+            return !updateNoteDto.tags.some(tag => tag.id === originalTag.id);
+        });
+        deletedTags.forEach(async (tag) => {
+            await this.tagRepository.delete(tag.id);
+        });
+        const newTags = updateNoteDto.tags.filter(tag => {
+            return !updateNoteDto.originalTags.some(originalTag => originalTag.id === tag.id);
+        });
+        newTags.forEach(async (tag) => {
+            tag.noteId = id;
+            await this.tagRepository.create(tag);
+            await this.tagRepository.save(tag);
+        });
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        updateNoteDto.note.updatedAt = new Date();
+        return this.userRepository.update(id, updateNoteDto.note);
     }
     deleteNote(id) {
         return this.userRepository.update(id, { isDeleted: true, deletedAt: new Date() });

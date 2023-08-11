@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateNoteDto, UpdateNoteDto } from 'src/notes/dto/note.dto';
-import { CreateTagDto } from 'src/tags/dto/tag.dto';
+import { CreateTagDto, UpdateTagDto } from 'src/tags/dto/tag.dto';
 import { Note, Tag } from 'src/typeorm';
 import { Repository } from 'typeorm';
 
@@ -55,9 +55,33 @@ export class NotesService {
         return data;
     }
 
-    updateNote(id: number, updateNoteDto: UpdateNoteDto) {
-        updateNoteDto.updatedAt = new Date();
-        return this.userRepository.update(id, updateNoteDto);
+    async updateNote(id: number, updateNoteDto: {
+        note: UpdateNoteDto
+        tags: UpdateTagDto[]
+        originalTags: UpdateTagDto[]
+    }) {
+        const deletedTags = updateNoteDto.originalTags.filter(originalTag => {
+            return !updateNoteDto.tags.some(tag => tag.id === originalTag.id);
+        });
+        deletedTags.forEach(async tag => {
+            await this.tagRepository.delete(tag.id);
+        });
+
+        const newTags = updateNoteDto.tags.filter(tag => {
+            return !updateNoteDto.originalTags.some(originalTag => originalTag.id === tag.id);
+        });
+        newTags.forEach(async tag => {
+            tag.noteId = id;
+            await this.tagRepository.create(tag);
+            await this.tagRepository.save(tag);
+        });
+
+        // tags are not creating fast enough
+        // so we need to wait for a while
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        updateNoteDto.note.updatedAt = new Date();
+        return this.userRepository.update(id, updateNoteDto.note);
     }
 
     deleteNote(id: number) {

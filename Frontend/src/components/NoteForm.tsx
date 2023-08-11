@@ -43,7 +43,12 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
   const NoteMutation = useMutation({
     mutationFn: async (data: NoteFormInputs) => {
       if (note) {
-        const postNote = noteService.updateNote(note?.id!, data);
+        const { tag, ...noteData } = data;
+        const postNote = noteService.updateNote(note?.id!, {
+          note: noteData,
+          updatedTags: tags,
+          originalTags: note.tags!,
+        });
         toast.promise(postNote, {
           loading: "Updating note...",
           success: "Note updated successfully",

@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateNoteDto, GetNoteDto, UpdateNoteDto } from 'src/notes/dto/note.dto';
 import { NotesService } from 'src/notes/services/notes/notes.service';
-import { CreateTagDto } from 'src/tags/dto/tag.dto';
+import { CreateTagDto, UpdateTagDto } from 'src/tags/dto/tag.dto';
 import { Note } from 'src/typeorm';
 
 @Controller('notes')
@@ -31,7 +31,11 @@ export class NotesController {
 
     @Put('/:id')
     @UsePipes(ValidationPipe)
-    updateNotes(@Param('id', ParseIntPipe) id: number, @Body() updateNoteDto: UpdateNoteDto) {
+    updateNotes(@Param('id', ParseIntPipe) id: number, @Body() updateNoteDto: {
+        note: UpdateNoteDto
+        tags: UpdateTagDto[]
+        originalTags: UpdateTagDto[]
+    }) {
         return this.noteService.updateNote(id, updateNoteDto);
     }
 
