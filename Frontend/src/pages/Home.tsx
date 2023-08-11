@@ -4,10 +4,11 @@ import { LeftRoundArrow, RightRoundArrow } from "iconoir-react";
 import { useQuery } from "@tanstack/react-query";
 import { noteService } from "../services/note.service";
 import { NewNoteButton } from "../components/NewNoteButton";
-import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Loader } from "../components/Loader";
 
 export const Home = () => {
-  const { data, isSuccess, refetch } = useQuery({
+  const { data, isSuccess, isLoading, refetch } = useQuery({
     queryKey: ["notes"],
     queryFn: () => noteService.getNotes(),
     keepPreviousData: true,
@@ -21,7 +22,7 @@ export const Home = () => {
       <h2 className="text-2xl font-medium text-text">
         KnockNote is a simple note taking app
       </h2>
-      <div
+      <ul
         ref={parent}
         className="flex flex-wrap gap-4 sm:grid sm:auto-rows-auto sm:grid-cols-auto-fill-25 sm:gap-1"
       >
@@ -29,7 +30,8 @@ export const Home = () => {
           data.data[0].map((note) => (
             <Note refetch={refetch} note={note} key={note.id} />
           ))}
-      </div>
+        {isLoading && <Loader />}
+      </ul>
       <div className="flex justify-center w-full py-6">
         <Pagination
           className="flex gap-2"

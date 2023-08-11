@@ -40,6 +40,9 @@ let NotesService = exports.NotesService = class NotesService {
             },
             take: limit,
             skip: (page - 1) * limit,
+            order: {
+                createdAt: 'DESC'
+            }
         });
         return data;
     }

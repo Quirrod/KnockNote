@@ -37,6 +37,9 @@ export class NotesService {
             },
             take: limit,
             skip: (page - 1) * limit,
+            order: {
+                createdAt: 'DESC'
+            }
         });
         return data;
     }
