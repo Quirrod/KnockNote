@@ -16,7 +16,7 @@ export const NewNoteButton: React.FC<NewNoteButtonProps> = ({ refetch }) => {
       <Modal isOpen={modalOpen} setOpen={setModalOpen} onClose={() => {}}>
         <NoteForm refetch={refetch} setModalOpen={setModalOpen} />
       </Modal>
-      <div className="fixed right-1/2 top-3 z-10">
+      <div className="fixed sm:right-1/2 top-3 z-10">
         <Button onClick={() => setModalOpen(true)} theme="secondary">
           New Note <Plus />
         </Button>

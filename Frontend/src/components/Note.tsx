@@ -18,8 +18,8 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
 
   return (
     <article className="flex w-full rounded overflow-hidden shadow-2xl justify-between">
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{note.title}</div>
+      <div className="sm:px-6 sm:py-4">
+        <h2 className="font-bold text-xl mb-2">{note.title}</h2>
         <p className="text-base line-clamp-3">{note.description}</p>
       </div>
       <div className="px-2 pt-4 pb-2 self-center">

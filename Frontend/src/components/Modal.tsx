@@ -21,8 +21,8 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <>
       {isOpen && (
-        <div className="bg-transparent fixed inset-0 flex items-center justify-center z-50  backdrop-blur-sm">
-          <div className="bg-secondary rounded-lg p-8 md:w-1/2 lg:w-1/3">
+        <div className="bg-transparent  fixed inset-0 flex items-center justify-center z-50  backdrop-blur-sm">
+          <div className="bg-secondary rounded-lg p-8 w-full md:w-1/2 lg:w-1/3">
             <div className="flex justify-end">
               <button
                 className="text-red-700 hover:text-red-500"
