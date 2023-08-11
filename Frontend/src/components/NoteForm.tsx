@@ -1,4 +1,3 @@
-"use client";
 import { Dispatch, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import CustomInput from "./formComponents/CustomInput";

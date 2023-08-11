@@ -39,7 +39,37 @@ let NotesService = exports.NotesService = class NotesService {
             }
         });
     }
-    async findAllNotes(page, limit, archived) {
+    async findAllNotes(page, limit, archived, search) {
+        if (search) {
+            const tags = await this.tagRepository.find({
+                where: {
+                    name: (0, typeorm_3.Like)(`%${search}%`)
+                }
+            });
+            if (tags.length > 0) {
+                const data = this.userRepository.findAndCount({
+                    where: {
+                        isArchived: archived,
+                        isDeleted: false,
+                    },
+                    take: limit,
+                    skip: (page - 1) * limit,
+                    order: {
+                        createdAt: 'DESC'
+                    },
+                    relations: ['tags']
+                });
+                const filteredData = data.then(async (data) => {
+                    const filteredData = await data[0].filter(note => {
+                        return note.tags.some(tag => {
+                            return tags.some(searchTag => searchTag.id === tag.id);
+                        });
+                    });
+                    return [filteredData, filteredData.length];
+                });
+                return filteredData;
+            }
+        }
         const data = this.userRepository.findAndCount({
             where: {
                 isArchived: archived,

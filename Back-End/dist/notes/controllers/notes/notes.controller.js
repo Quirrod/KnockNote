@@ -19,8 +19,8 @@ let NotesController = exports.NotesController = class NotesController {
     constructor(noteService) {
         this.noteService = noteService;
     }
-    getNotes(page, limit, archived) {
-        return this.noteService.findAllNotes(page, limit, archived);
+    getNotes(page, limit, archived, search) {
+        return this.noteService.findAllNotes(page, limit, archived, search);
     }
     findNotesById(id) {
         return this.noteService.findNote(id);
@@ -40,9 +40,10 @@ __decorate([
     __param(0, (0, common_1.Query)('page', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Query)('limit', common_1.ParseIntPipe)),
     __param(2, (0, common_1.Query)('archived', common_1.ParseBoolPipe)),
+    __param(3, (0, common_1.Query)('search')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number, Boolean]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:paramtypes", [Number, Number, Boolean, String]),
+    __metadata("design:returntype", void 0)
 ], NotesController.prototype, "getNotes", null);
 __decorate([
     (0, common_1.Get)('/:id'),

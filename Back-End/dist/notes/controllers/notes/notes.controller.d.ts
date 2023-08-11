@@ -5,7 +5,7 @@ import { Note } from 'src/typeorm';
 export declare class NotesController {
     private readonly noteService;
     constructor(noteService: NotesService);
-    getNotes(page: number, limit: number, archived: boolean): Promise<[Note[], number]>;
+    getNotes(page: number, limit: number, archived: boolean, search: string): Promise<(number | Note[])[]>;
     findNotesById(id: number): Promise<Note>;
     createNotes(createNoteDto: {
         note: CreateNoteDto;

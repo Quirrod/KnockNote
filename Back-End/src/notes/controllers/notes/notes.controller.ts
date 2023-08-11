@@ -13,8 +13,9 @@ export class NotesController {
         @Query('page', ParseIntPipe) page: number,
         @Query('limit', ParseIntPipe) limit: number,
         @Query('archived', ParseBoolPipe) archived: boolean,
-    ): Promise<[Note[], number]> {
-        return this.noteService.findAllNotes(page, limit, archived);
+        @Query('search') search: string
+    ) {
+        return this.noteService.findAllNotes(page, limit, archived, search);
 
     }
 
