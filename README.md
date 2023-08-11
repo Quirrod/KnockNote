@@ -2,6 +2,10 @@
 
 This repository contains the code for the ENSOLVERS Challenge, consisting of both a frontend and a backend application.
 
+Developed by: Quirrod
+
+Demo: [https://ensolver-challenge.vercel.app](https://ensolver-challenge.vercel.app)
+
 ## Table of Contents
 - [Repository Setup for ENSOLVERS Challenge](#repository-setup-for-ensolvers-challenge)
   - [Table of Contents](#table-of-contents)
@@ -170,5 +174,6 @@ Follow these steps to set up and run the application:
 
 - Make sure to replace `DB_USER` and `DB_PASSWORD` in the `.env` file with your actual PostgreSQL credentials.
 - Script for running in linux environment is in the root of the project, it is called `run.sh` and it is executable. (Make sure to give it execution permissions)
+- A demo of the application is available at [https://ensolver-challenge.vercel.app](https://ensolver-challenge.vercel.app).
 
 ---
