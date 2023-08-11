@@ -17,8 +17,8 @@ export const NoteModal: React.FC<NoteModalProps> = ({
 }) => {
   return (
     <Modal isOpen={isOpen} setOpen={setOpen} onClose={onClose}>
-      <h2 className="font-bold text-xl mb-2 break-all">{note.title}</h2>
-      <p className="text-base overflow-scroll break-all">{note.description}</p>
+        <h2 className="font-bold text-xl mb-2">{note.title}</h2>
+        <p className="text-base">{note.description}</p>
     </Modal>
   );
 };
