@@ -6,11 +6,14 @@ import { noteService } from "../services/note.service";
 import { NewNoteButton } from "../components/NewNoteButton";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Loader } from "../components/Loader";
+import { useState } from "react";
 
 export const Archived = () => {
+  const [search, setSearch] = useState("");
+
   const { data, isSuccess, isLoading, refetch } = useQuery({
-    queryKey: ["notes"],
-    queryFn: () => noteService.getNotes(6, 1, true),
+    queryKey: ["notes", search],
+    queryFn: () => noteService.getNotes(6, 1, true, search),
     keepPreviousData: true,
   });
   const [parent] = useAutoAnimate();
@@ -22,6 +25,13 @@ export const Archived = () => {
       <h2 className="text-2xl font-medium text-text">
         KnockNote is a simple note taking app
       </h2>
+      <input
+        type="search"
+        className="w-full px-4 py-2 mt-4 text-lg font-lato border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+        placeholder="Search tags"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
       <ul
         ref={parent}
         className="flex flex-wrap gap-4 sm:grid sm:auto-rows-auto sm:grid-cols-auto-fill-25 sm:gap-1"
