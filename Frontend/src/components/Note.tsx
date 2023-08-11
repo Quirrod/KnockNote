@@ -9,6 +9,7 @@ import { noteService } from "../services/note.service";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { useLocation } from "react-router";
+import { NoteModal } from "./NoteModal";
 
 interface NoteProps {
   note: INote;
@@ -19,6 +20,7 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
   const [isOpenDelete, setIsOpenDelete] = React.useState(false);
   const [isOpenArchive, setIsOpenArchive] = React.useState(false);
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
+  const [isOpenNote, setIsOpenNote] = React.useState(false);
   const location = useLocation();
 
   const ArchiveNoteMutation = useMutation({
@@ -63,25 +65,33 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
   }
 
   return (
-    <article className="flex w-full rounded overflow-hidden shadow-2xl justify-between">
-      <div className="sm:px-6 sm:py-4">
-        <h2 className="font-bold text-xl mb-2">{note.title}</h2>
-        <p className="text-base line-clamp-3">{note.description}</p>
-      </div>
-      <div className="px-2 pt-4 pb-2 self-center">
-        <Button onClick={() => setIsOpenEdit(true)} theme="primary">
-          <Edit />
-          Edit
-        </Button>
-        <Button onClick={() => setIsOpenDelete(true)} theme="primary">
-          <DeleteCircle />
-          Delete
-        </Button>
-        <Button onClick={() => setIsOpenArchive(true)} theme="secondary">
-          {location.pathname === "/archived" ? <UndoAction /> : <Archive />}
-          {location.pathname === "/archived" ? "Unarchive" : "Archive"}
-        </Button>
-      </div>
+    <>
+      <article className="flex sm:flex-row flex-col w-full rounded overflow-hidden shadow-2xl justify-between px-2 sm:py-4">
+        <div
+          className="w-full cursor-pointer transition duration-500 break-all
+          ease-in-out transform hover:-translate-y-1 hover:scale-30"
+          onClick={() => {
+            setIsOpenNote(true);
+          }}
+        >
+          <h2 className="font-bold text-xl mb-2">{note.title}</h2>
+          <p className="text-base line-clamp-3">{note.description}</p>
+        </div>
+        <div className="flex sm:block pt-4 pb-2 self-center">
+          <Button onClick={() => setIsOpenEdit(true)} theme="primary">
+            <Edit />
+            Edit
+          </Button>
+          <Button onClick={() => setIsOpenDelete(true)} theme="primary">
+            <DeleteCircle />
+            Delete
+          </Button>
+          <Button onClick={() => setIsOpenArchive(true)} theme="secondary">
+            {location.pathname === "/archived" ? <UndoAction /> : <Archive />}
+            {location.pathname === "/archived" ? "Unarchive" : "Archive"}
+          </Button>
+        </div>
+      </article>
       <ConfirmModal
         isOpen={isOpenDelete}
         setOpen={setIsOpenDelete}
@@ -96,7 +106,9 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
         onClose={() => setIsOpenArchive(false)}
         onClick={() => onArchive(note)}
       >
-        Are you sure you want to archive this note?
+        {location.pathname === "/archived"
+          ? "Are you sure you want to unarchive this note?"
+          : "Are you sure you want to archive this note?"}
       </ConfirmModal>
       <Modal
         isOpen={isOpenEdit}
@@ -105,6 +117,12 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
       >
         <NoteForm refetch={refetch} note={note} setModalOpen={setIsOpenEdit} />
       </Modal>
-    </article>
+      <NoteModal
+        note={note}
+        isOpen={isOpenNote}
+        setOpen={setIsOpenNote}
+        onClose={() => setIsOpenNote(false)}
+      />
+    </>
   );
 };
