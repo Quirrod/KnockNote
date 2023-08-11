@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Tag } from './tag.entity';
 
 @Entity()
 export class Note {
@@ -30,6 +31,9 @@ export class Note {
         default: false,
     })
     isDeleted: boolean;
+
+    @OneToMany(() => Tag, tag => tag.note)
+    tags: Tag[];
 
     @Column({
         nullable: false,

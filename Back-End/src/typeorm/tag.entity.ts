@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Note } from './note.entity';
 
 @Entity()
 export class Tag {
@@ -19,9 +20,11 @@ export class Tag {
     })
     isDeleted: boolean;
 
+    @ManyToOne(() => Note, note => note.id)
+    note: Note;
+
     @Column({
         nullable: false,
-        default: 0,
     })
     noteId: number;
 

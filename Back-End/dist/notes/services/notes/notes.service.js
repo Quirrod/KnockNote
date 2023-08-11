@@ -30,7 +30,6 @@ let NotesService = exports.NotesService = class NotesService {
             await this.tagRepository.create(tag);
             await this.tagRepository.save(tag);
         });
-        console.log("TCL: NotesService -> result", result);
         return result;
     }
     findNote(id) {
@@ -50,7 +49,8 @@ let NotesService = exports.NotesService = class NotesService {
             skip: (page - 1) * limit,
             order: {
                 createdAt: 'DESC'
-            }
+            },
+            relations: ['tags']
         });
         return data;
     }

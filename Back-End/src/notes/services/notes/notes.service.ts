@@ -22,7 +22,6 @@ export class NotesService {
             await this.tagRepository.create(tag);
             await this.tagRepository.save(tag);
         });
-        console.log("TCL: NotesService -> result", result)
         return result;
     }
 
@@ -50,7 +49,8 @@ export class NotesService {
             skip: (page - 1) * limit,
             order: {
                 createdAt: 'DESC'
-            }
+            },
+            relations: ['tags']
         });
         return data;
     }

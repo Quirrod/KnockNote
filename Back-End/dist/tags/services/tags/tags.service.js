@@ -22,7 +22,7 @@ let TagsService = exports.TagsService = class TagsService {
         this.noteRepository = noteRepository;
     }
     createTag(name, noteId) {
-        const newTag = this.noteRepository.create({ name: name, noteId: noteId });
+        const newTag = this.noteRepository.create({ name: name, note: noteId });
         return this.noteRepository.save(newTag);
     }
     findTag(id) {
