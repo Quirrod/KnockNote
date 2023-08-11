@@ -4,6 +4,7 @@ import { Note } from "../components/Note";
 import { useQuery } from "@tanstack/react-query";
 import { noteService } from "../services/note.service";
 import { NewNoteButton } from "../components/NewNoteButton";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export const Archived = () => {
   const { data, isSuccess, refetch } = useQuery({
@@ -11,6 +12,8 @@ export const Archived = () => {
     queryFn: () => noteService.getNotes(6, 1, true),
     keepPreviousData: true,
   });
+  const [parent, enableAnimations] = useAutoAnimate();
+
   return (
     <>
       <NewNoteButton refetch={refetch} />
@@ -24,7 +27,7 @@ export const Archived = () => {
             <Note refetch={refetch} note={note} key={note.id} />
           ))}
       </div>
-      <div className="flex justify-center w-full py-6">
+      <div ref={parent} className="flex justify-center w-full py-6">
         <Pagination
           className="flex gap-2"
           onChange={(current, pageSize) => {

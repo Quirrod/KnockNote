@@ -4,6 +4,7 @@ import { LeftRoundArrow, RightRoundArrow } from "iconoir-react";
 import { useQuery } from "@tanstack/react-query";
 import { noteService } from "../services/note.service";
 import { NewNoteButton } from "../components/NewNoteButton";
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 export const Home = () => {
   const { data, isSuccess, refetch } = useQuery({
@@ -11,6 +12,7 @@ export const Home = () => {
     queryFn: () => noteService.getNotes(),
     keepPreviousData: true,
   });
+  const [parent, enableAnimations] = useAutoAnimate();
 
   return (
     <>
@@ -19,7 +21,10 @@ export const Home = () => {
       <h2 className="text-2xl font-medium text-text">
         KnockNote is a simple note taking app
       </h2>
-      <div className="flex flex-wrap gap-4 sm:grid sm:auto-rows-auto sm:grid-cols-auto-fill-25 sm:gap-1">
+      <div
+        ref={parent}
+        className="flex flex-wrap gap-4 sm:grid sm:auto-rows-auto sm:grid-cols-auto-fill-25 sm:gap-1"
+      >
         {isSuccess &&
           data.data[0].map((note) => (
             <Note refetch={refetch} note={note} key={note.id} />

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Cancel } from "iconoir-react";
 
 type ModalProps = {
@@ -21,7 +22,12 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <>
       {isOpen && (
-        <div className="bg-transparent  fixed inset-0 flex items-center justify-center z-50  backdrop-blur-sm">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+          className="bg-transparent  fixed inset-0 flex items-center justify-center z-50  backdrop-blur-sm"
+        >
           <div className="bg-secondary rounded-lg p-8 w-full md:w-1/2 lg:w-1/3">
             <div className="flex justify-end">
               <button
@@ -33,7 +39,7 @@ const Modal: React.FC<ModalProps> = ({
             </div>
             <div className="mt-4">{children}</div>
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   );
