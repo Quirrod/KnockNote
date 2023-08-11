@@ -164,7 +164,7 @@ Follow these steps to set up and run the application:
      npm run start
      ```
 
-   The frontend will be accessible at `http://localhost:3000`, and the backend will be accessible at `http://localhost:3000/api`.
+   The frontend will be accessible at `http://localhost:5173`, and the backend will be accessible at `http://localhost:3000/api`.
 
 ## Notes
 
