@@ -5,6 +5,9 @@ import { ConfirmModal } from "./ConfirmModal";
 import Modal from "./Modal";
 import NoteForm from "./NoteForm";
 import { INote } from "../models/note.model";
+import { noteService } from "../services/note.service";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 
 interface NoteProps {
   note: INote;
@@ -15,6 +18,47 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
   const [isOpenDelete, setIsOpenDelete] = React.useState(false);
   const [isOpenArchive, setIsOpenArchive] = React.useState(false);
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
+
+  const ArchiveNoteMutation = useMutation({
+    mutationFn: (data: INote) => {
+      data.isArchived = true;
+      const archiveNote = noteService.updateNote(data?.id!, data);
+      return archiveNote;
+      // toast.promise(postCode, {
+      //   loading: "Sharing Code...",
+      //   success: "Code Shared successfully",
+      //   error: "Error sharing code",
+      // });
+    },
+    onSuccess: (response: AxiosResponse) => {
+      refetch();
+      setIsOpenArchive(false);
+    },
+  });
+
+  function onArchive(data: INote) {
+    ArchiveNoteMutation.mutate(data);
+  }
+
+  const DeleteNoteMutation = useMutation({
+    mutationFn: (data: INote) => {
+      const deleteNote = noteService.deleteNote(data?.id!);
+      return deleteNote;
+      // toast.promise(postCode, {
+      //   loading: "Sharing Code...",
+      //   success: "Code Shared successfully",
+      //   error: "Error sharing code",
+      // });
+    },
+    onSuccess: (response: AxiosResponse) => {
+      refetch();
+      setIsOpenDelete(false);
+    },
+  });
+
+  function onDelete(data: INote) {
+    DeleteNoteMutation.mutate(data);
+  }
 
   return (
     <article className="flex w-full rounded overflow-hidden shadow-2xl justify-between">
@@ -40,7 +84,7 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
         isOpen={isOpenDelete}
         setOpen={setIsOpenDelete}
         onClose={() => setIsOpenDelete(false)}
-        onClick={() => console.log("Delete")}
+        onClick={() => onDelete(note)}
       >
         Are you sure you want to delete this note?
       </ConfirmModal>
@@ -48,7 +92,7 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
         isOpen={isOpenArchive}
         setOpen={setIsOpenArchive}
         onClose={() => setIsOpenArchive(false)}
-        onClick={() => console.log("Archive")}
+        onClick={() => onArchive(note)}
       >
         Are you sure you want to archive this note?
       </ConfirmModal>
