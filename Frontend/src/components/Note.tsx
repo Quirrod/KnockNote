@@ -23,15 +23,18 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const [isOpenNote, setIsOpenNote] = React.useState(false);
   const location = useLocation();
+  const isArchived = location.pathname === "/archived";
 
   const ArchiveNoteMutation = useMutation({
     mutationFn: (data: INote) => {
       data.isArchived = true;
       const archiveNote = noteService.updateNote(data?.id!, data);
       toast.promise(archiveNote, {
-        loading: "Archiving note...",
-        success: "Note archived successfully",
-        error: "Error archiving note",
+        loading: isArchived ? "Unarchiving note..." : "Archiving note...",
+        success: isArchived
+          ? "Note unarchived successfully"
+          : "Note archived successfully",
+        error: isArchived ? "Error unarchiving note" : "Error archiving note",
       });
       return archiveNote;
     },
@@ -41,7 +44,11 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
     },
 
     onError: (error: AxiosError<{ message: string }>) => {
-      toast.error(error.response?.data?.message || "Error archiving note");
+      toast.error(
+        error.response?.data?.message || isArchived
+          ? "Error unarchiving note"
+          : "Error archiving note"
+      );
     },
   });
 
@@ -95,8 +102,8 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
             Delete
           </Button>
           <Button onClick={() => setIsOpenArchive(true)} theme="secondary">
-            {location.pathname === "/archived" ? <UndoAction /> : <Archive />}
-            {location.pathname === "/archived" ? "Unarchive" : "Archive"}
+            {isArchived ? <UndoAction /> : <Archive />}
+            {isArchived ? "Unarchive" : "Archive"}
           </Button>
         </div>
       </article>
@@ -114,7 +121,7 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
         onClose={() => setIsOpenArchive(false)}
         onClick={() => onArchive(note)}
       >
-        {location.pathname === "/archived"
+        {isArchived
           ? "Are you sure you want to unarchive this note?"
           : "Are you sure you want to archive this note?"}
       </ConfirmModal>
