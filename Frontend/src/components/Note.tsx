@@ -1,4 +1,4 @@
-import { Archive, DeleteCircle, Edit } from "iconoir-react";
+import { Archive, DeleteCircle, Edit, UndoAction } from "iconoir-react";
 import React from "react";
 import Button from "./Button";
 import { ConfirmModal } from "./ConfirmModal";
@@ -8,6 +8,7 @@ import { INote } from "../models/note.model";
 import { noteService } from "../services/note.service";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
+import { useLocation } from "react-router";
 
 interface NoteProps {
   note: INote;
@@ -18,6 +19,7 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
   const [isOpenDelete, setIsOpenDelete] = React.useState(false);
   const [isOpenArchive, setIsOpenArchive] = React.useState(false);
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
+  const location = useLocation();
 
   const ArchiveNoteMutation = useMutation({
     mutationFn: (data: INote) => {
@@ -76,8 +78,8 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
           Delete
         </Button>
         <Button onClick={() => setIsOpenArchive(true)} theme="secondary">
-          <Archive />
-          Archive
+          {location.pathname === "/archived" ? <UndoAction /> : <Archive />}
+          {location.pathname === "/archived" ? "Unarchive" : "Archive"}
         </Button>
       </div>
       <ConfirmModal
