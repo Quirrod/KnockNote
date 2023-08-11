@@ -8,6 +8,7 @@ interface ConfirmModalProps {
   onClose: () => void;
   children: React.ReactNode;
   onClick: () => void;
+  disabledConfirm?: boolean;
 }
 
 export const ConfirmModal: React.FC<ConfirmModalProps> = ({
@@ -16,6 +17,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
   onClose,
   children,
   onClick,
+  disabledConfirm = false,
 }) => {
   return (
     <Modal isOpen={isOpen} setOpen={setOpen} onClose={onClose}>
@@ -23,7 +25,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
         <h1 className="text-2xl font-bold text-text">Are you sure?</h1>
         <p className="text-text">{children}</p>
         <div className="flex justify-between w-1/2">
-          <Button onClick={onClick} theme="primary">
+          <Button disable={disabledConfirm} onClick={onClick} theme="primary">
             Confirm
           </Button>
           <Button onClick={onClose} theme="secondary">

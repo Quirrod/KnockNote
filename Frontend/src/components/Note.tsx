@@ -22,6 +22,7 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
   const [isOpenArchive, setIsOpenArchive] = React.useState(false);
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const [isOpenNote, setIsOpenNote] = React.useState(false);
+  const [disableButton, setDisableButton] = React.useState(false);
   const location = useLocation();
   const isArchived = location.pathname === "/archived";
 
@@ -40,10 +41,12 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
     },
     onSuccess: () => {
       refetch();
+      setDisableButton(false);
       setIsOpenArchive(false);
     },
 
     onError: (error: AxiosError<{ message: string }>) => {
+      setDisableButton(false);
       toast.error(
         error.response?.data?.message || isArchived
           ? "Error unarchiving note"
@@ -53,6 +56,7 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
   });
 
   function onArchive(data: INote) {
+    setDisableButton(true);
     ArchiveNoteMutation.mutate(data);
   }
 
@@ -68,14 +72,17 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
     },
     onSuccess: () => {
       refetch();
+      setDisableButton(false);
       setIsOpenDelete(false);
     },
     onError: (error: AxiosError<{ message: string }>) => {
+      setDisableButton(false);
       toast.error(error.response?.data?.message || "Error deleting note");
     },
   });
 
   function onDelete(data: INote) {
+    setDisableButton(true);
     DeleteNoteMutation.mutate(data);
   }
 
@@ -112,6 +119,7 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
         setOpen={setIsOpenDelete}
         onClose={() => setIsOpenDelete(false)}
         onClick={() => onDelete(note)}
+        disabledConfirm={disableButton}
       >
         Are you sure you want to delete this note?
       </ConfirmModal>
@@ -120,6 +128,7 @@ export const Note: React.FC<NoteProps> = ({ note, refetch }) => {
         setOpen={setIsOpenArchive}
         onClose={() => setIsOpenArchive(false)}
         onClick={() => onArchive(note)}
+        disabledConfirm={disableButton}
       >
         {isArchived
           ? "Are you sure you want to unarchive this note?"
