@@ -10,13 +10,16 @@ import { useState } from "react";
 
 export const Archived = () => {
   const [search, setSearch] = useState("");
-
+  const [page, setPage] = useState(1);
   const { data, isSuccess, isLoading, refetch } = useQuery({
-    queryKey: ["notes", search],
-    queryFn: () => noteService.getNotes(6, 1, true, search),
+    queryKey: ["notes", search, page],
+    queryFn: () => noteService.getNotes(6, page, true, search),
     keepPreviousData: true,
   });
   const [parent] = useAutoAnimate();
+
+  const isFirstPage = page === 1;
+  const isLastPage = Math.ceil(data?.data[1]! / 6) === page;
 
   return (
     <>
@@ -43,20 +46,49 @@ export const Archived = () => {
 
         {isLoading && <Loader />}
       </ul>
-      <div ref={parent} className="flex justify-center w-full py-6">
+      <div className="flex justify-center w-full py-6">
         <Pagination
           className="flex gap-2"
-          onChange={(current, pageSize) => {
-            console.log("Page changed");
-            console.log(current);
-            console.log(pageSize);
+          itemRender={(pageNum, type) => {
+            if (type === "page") {
+              console.log(page, pageNum);
+              return (
+                <div
+                  className={`px-2 py-1 rounded-md hover:bg-secondary hover:text-white ${
+                    page === pageNum
+                      ? "bg-secondary text-white cursor-not-allowed"
+                      : "bg-gray-300 text-gray-500"
+                  }`}
+                >
+                  {pageNum}
+                </div>
+              );
+            }
+            return (
+              <div
+                className={`px-2 py-1 rounded-md hover:bg-secondary hover:text-white ${
+                  type === "prev" && isLastPage
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : type === "next" && isFirstPage
+                    ? "bg-gray-300 text-gray-500"
+                    : "bg-secondary text-white cursor-not-allowed"
+                } ${!isFirstPage && type === "prev" ? "cursor-pointer" : ""} ${
+                  !isLastPage && type === "next" ? "cursor-pointer" : ""
+                }`}
+              >
+                {type === "prev" && <LeftRoundArrow />}
+                {type === "next" && <RightRoundArrow />}
+              </div>
+            );
           }}
-          current={1}
-          total={3}
+          onChange={(current) => {
+            setPage(current);
+          }}
+          current={page}
+          total={isSuccess ? data?.data[1] : 0}
           defaultPageSize={6}
-          prevIcon={<LeftRoundArrow />}
-          nextIcon={<RightRoundArrow />}
           hideOnSinglePage={true}
+          style={{ outline: "none", cursor: "pointer" }}
         />
       </div>
     </>

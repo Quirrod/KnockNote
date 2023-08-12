@@ -83,7 +83,6 @@ function NoteForm({ refetch, setModalOpen, note }: NoteFormProps) {
   });
 
   function onSubmit(data: NoteFormInputs) {
-    console.log("te ");
     setDisableButton(true);
     NoteMutation.mutate(data);
   }
