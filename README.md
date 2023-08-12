@@ -1,5 +1,8 @@
 # Repository Setup for ENSOLVERS Challenge
 
+
+`KnockNotes` is a versatile note-taking application designed to enhance productivity. With its user-friendly interface and robust features, KnockNotes offers a seamless experience for creating, managing, and archiving notes.
+
 This repository contains the code for the ENSOLVERS Challenge, consisting of both a frontend and a backend application.
 
 Developed by: Quirrod
